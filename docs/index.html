@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Demo Broker — Kasper Coin</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lightweight-charts@4.1.0/dist/lightweight-charts.standalone.production.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <div class="asset-title">
+          <div class="asset-name">Монета Каспера</div>
+          <div class="asset-balance">$<span id="balance-value">10000.00</span></div>
+        </div>
+        <div class="asset-badge">KASPER • OTC</div>
+      </header>
+
+      <div class="layout">
+        <section id="chart-shell">
+          <div class="chart-toolbar">
+            <div class="tf-group" id="timeframes"></div>
+            <div class="chart-actions">
+              <button class="chart-btn" id="zoom-out">-</button>
+              <button class="chart-btn" id="fit">↔</button>
+              <button class="chart-btn" id="zoom-in">+</button>
+              <div class="price-chip">KASPER: $<span id="current-price">--</span></div>
+            </div>
+          </div>
+          <div id="chart-container">
+            <div id="chart"></div>
+          </div>
+          <div class="legend">
+            <span class="legend-dot buy">Покупка</span>
+            <span class="legend-dot sell">Продажа</span>
+            <span class="legend-dot win">Выигрыш</span>
+            <span class="legend-dot lose">Проигрыш</span>
+          </div>
+        </section>
+
+        <aside class="side-panel">
+          <div class="side-block">
+            <div class="side-label">Баланс</div>
+            <div class="side-value">$<span id="balance-side">10000.00</span></div>
+          </div>
+          <div class="side-block">
+            <div class="side-label">Время сделки</div>
+            <select id="expiry">
+              <option value="5">5s</option>
+              <option value="15">15s</option>
+              <option value="30">30s</option>
+              <option value="60">1m</option>
+            </select>
+          </div>
+          <div class="side-block">
+            <div class="side-label">Сумма</div>
+            <input id="amount" type="number" value="10" min="1" max="1000" />
+          </div>
+          <div class="side-block readonly">
+            <div class="side-label">Выплата</div>
+            <div class="side-value" id="payout-display">90%</div>
+          </div>
+          <div class="side-actions">
+            <button id="buy">Купить ↑</button>
+            <button id="sell">Продать ↓</button>
+          </div>
+          <div class="side-block">
+            <div class="side-label">Winrate</div>
+            <div class="side-value" id="winrate">0%</div>
+          </div>
+          <div class="side-block">
+            <div class="side-label">Прибыль</div>
+            <div class="side-value" id="profit">$0.00</div>
+          </div>
+        </aside>
+      </div>
+
+      <h3>История сделок</h3>
+      <div id="trades"></div>
+    </div>
+
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <h3 id="modal-title"></h3>
+        <p id="modal-text"></p>
+        <div style="display:flex; gap:12px;">
+          <button id="confirm-trade" style="flex:1; background:#00ff88;color:#000;">Подтвердить</button>
+          <button id="cancel-trade" style="flex:1; background:#666;">Отмена</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
